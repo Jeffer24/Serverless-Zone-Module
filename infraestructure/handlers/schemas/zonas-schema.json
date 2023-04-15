@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ZonaInputModel",
+  "description": "Validacion de las zonas de la aplicacion.",
+  "type": "object",
+  "properties": {
+      "codigoZona": {
+        "description": "Codigo de la zona",
+        "type": "string",
+        "minLength":1,
+        "maxLength":45
+      },
+      "nombreZona": {
+        "description": "Nombre de la zona",
+        "type": "string",
+        "minLength":2,
+        "maxLength":200
+      },
+      "idPais": {
+        "description": "Id pais",
+        "type": "integer",
+        "maximum": 1000,
+        "minimum":1
+      }
+        
+  },
+  "required": [ "codigoZona", "nombreZona", "idPais"]
+}

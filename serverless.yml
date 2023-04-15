@@ -1,0 +1,65 @@
+app: web-proyecto-serverless
+org: jeffer24
+#console: true
+
+service: serverless-zona-module
+
+frameworkVersion: '3'
+
+#plugins:
+  #- serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: "us-east-1"
+  stage: ${opt:stage}
+
+  apiGateway:
+    request:
+      schemas:
+        user-input-model:
+          name: ZonaInputModel
+          schema: ${file(infraestructure/handlers/schemas/zonas-schema.json)}
+          description: "Validacion de los datos de las zonas"
+
+functions:
+  getZonas:
+    handler: infraestructure/handlers/zonas-handler.getZonas
+    events:
+      - http:
+          path: zonas
+          method: get
+          #cors: true
+          #authorizer: aws_iam
+  createZona:
+    handler: infraestructure/handlers/zonas-handler.createZona
+    events:
+      - http:
+          path: zonas
+          method: post
+          request:
+            schemas:
+              application/json: ${file(infraestructure/handlers/schemas/zonas-schema.json)}
+
+  updateZona:
+    handler: infraestructure/handlers/zonas-handler.updateZona
+    events:
+      - http:
+          path: zonas/{id}
+          method: put
+          request:
+            schemas:
+              application/json: ${file(infraestructure/handlers/schemas/zonas-schema.json)}
+  deleteZona:
+    handler: infraestructure/handlers/zonas-handler.deleteZona
+    events:
+      - http:
+          path: zonas/{id}
+          method: delete  
+  getDetailZona:
+    handler: infraestructure/handlers/zonas-handler.getDetailZona
+    events:
+      - http:
+          path: zonas/{id}
+          method: get
